@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using main.Data;
 using main.Models;
 using main.Data.Seeders;
+using main.Services.Interfaces;
+using main.Services.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +21,8 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options => {
 })
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 

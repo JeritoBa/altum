@@ -1,0 +1,46 @@
+@model main.ViewModels.Auth.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>Register</h2>
+
+<form asp-action="Register" method="post">
+    <div style="margin-bottom: 10px;">
+        <label asp-for="FullName">Full Name</label><br />
+        <input asp-for="FullName" />
+        <span asp-validation-for="FullName" style="color:red;"></span>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label asp-for="Email"></label><br />
+        <input asp-for="Email" />
+        <span asp-validation-for="Email" style="color:red;"></span>
+    </div>
+    
+    <div style="margin-bottom: 10px;">
+        <label asp-for="Password"></label><br />
+        <input asp-for="Password" />
+        <span asp-validation-for="Password" style="color:red;"></span>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label asp-for="ConfirmPassword">Confirm Password</label><br />
+        <input asp-for="ConfirmPassword" />
+        <span asp-validation-for="ConfirmPassword" style="color:red;"></span>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label asp-for="Role"></label><br />
+        <select asp-for="Role" asp-items="Html.GetEnumSelectList<main.Models.Enums.UserRole>()">
+            <option value="">-- Select a Role --</option>
+        </select>
+        <span asp-validation-for="Role" style="color:red;"></span>
+    </div>
+    
+    <button type="submit">Register</button>
+</form>
+
+<p style="margin-top: 15px;">
+    Already have an account? <a asp-action="Login">Login here</a>
+</p>
