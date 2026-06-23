@@ -19,6 +19,7 @@
         
         <h3>Property Details</h3>
         <ul>
+            <li><strong>Price per Night:</strong> <span style="color: #28a745; font-weight: bold;">$@Model.PricePerNight</span></li>
             <li><strong>Address:</strong> @Model.Address, @Model.City, @Model.Country</li>
             <li><strong>Max Guests:</strong> @Model.MaxGuests</li>
             <li><strong>Bedrooms:</strong> @Model.Bedrooms</li>
@@ -27,7 +28,20 @@
         </ul>
         
         <div style="margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px solid #ddd;">
-            <p><em>Booking and Favorite options will be placed here soon.</em></p>
+            <p><em>Favorite option will be placed here soon</em></p>
+
+            @if (User.IsInRole("Guest") && Model.IsAvailable)
+            {
+                <a asp-controller="Booking" asp-action="Create" asp-route-propertyId="@Model.Id" style="display:inline-block; background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px;">Book Now</a>
+            }
+            else if (!Model.IsAvailable)
+            {
+                <p style="color: red; margin: 0;">This property is not available for booking right now.</p>
+            }
+            else if (User.IsInRole("Owner"))
+            {
+                <p style="color: #666; margin: 0;">Owners cannot book properties.</p>
+            }
         </div>
     </div>
 </div>

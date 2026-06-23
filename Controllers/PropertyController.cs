@@ -84,6 +84,7 @@ namespace main.Controllers
                 Bathrooms = model.Bathrooms,
                 MainImageUrl = model.MainImageUrl,
                 IsAvailable = model.IsAvailable,
+                PricePerNight = model.PricePerNight,
                 OwnerId = user.Id
             };
 
@@ -120,7 +121,8 @@ namespace main.Controllers
                 Bedrooms = property.Bedrooms,
                 Bathrooms = property.Bathrooms,
                 MainImageUrl = property.MainImageUrl,
-                IsAvailable = property.IsAvailable
+                IsAvailable = property.IsAvailable,
+                PricePerNight = property.PricePerNight
             };
 
             return View(model);

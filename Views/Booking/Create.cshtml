@@ -1,0 +1,37 @@
+@model main.ViewModels.Booking.BookingFormViewModel
+@{
+    ViewData["Title"] = "Book a Property";
+}
+
+<h2>Book Property: @Model.PropertyName</h2>
+
+<form asp-action="Create" method="post" style="max-width: 400px;">
+    <div asp-validation-summary="ModelOnly" style="color:red; margin-bottom: 15px;"></div>
+    
+    <input type="hidden" asp-for="PropertyId" />
+    <input type="hidden" asp-for="PropertyName" />
+    
+    <div style="margin-bottom: 10px;">
+        <label asp-for="CheckInDate">Check-in Date</label><br />
+        <input asp-for="CheckInDate" type="datetime-local" style="width: 100%; padding: 5px;" value="@Model.CheckInDate.ToString("yyyy-MM-ddTHH:mm")"/>
+        <span asp-validation-for="CheckInDate" style="color:red;"></span>
+    </div>
+    
+    <div style="margin-bottom: 10px;">
+        <label asp-for="CheckOutDate">Check-out Date</label><br />
+        <input asp-for="CheckOutDate" type="datetime-local" style="width: 100%; padding: 5px;" value="@Model.CheckOutDate.ToString("yyyy-MM-ddTHH:mm")"/>
+        <span asp-validation-for="CheckOutDate" style="color:red;"></span>
+    </div>
+    
+    <div style="margin-bottom: 15px;">
+        <label asp-for="GuestsCount">Number of Guests</label><br />
+        <input asp-for="GuestsCount" type="number" min="1" style="width: 100%; padding: 5px;" />
+        <span asp-validation-for="GuestsCount" style="color:red;"></span>
+    </div>
+    
+    <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer; width: 100%;">Confirm Booking</button>
+    
+    <div style="margin-top: 10px; text-align: center;">
+        <a asp-controller="Property" asp-action="Details" asp-route-id="@Model.PropertyId">Cancel</a>
+    </div>
+</form>

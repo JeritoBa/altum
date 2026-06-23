@@ -24,6 +24,7 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options => {
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IPropertyService, PropertyService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 var app = builder.Build();
 

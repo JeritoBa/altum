@@ -21,6 +21,15 @@ namespace main.Data
         {
             base.OnModelCreating(builder);
 
+            // Properties Casting
+            builder.Entity<Booking>()
+                .Property(b => b.CheckInDate)
+                .HasColumnType("timestamp without time zone");
+            
+            builder.Entity<Booking>()
+                .Property(b => b.CheckOutDate)
+                .HasColumnType("timestamp without time zone");
+
             // Enums conversion to string
             builder.Entity<User>()
                 .Property(u => u.Role)

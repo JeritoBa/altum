@@ -14,7 +14,9 @@
 
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    <li><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                    @if (User.IsInRole("Owner")) {
+                        <li><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                    }
                     <li><a asp-controller="Favorite" asp-action="Index">Favorites</a></li>
                     <li><a asp-controller="Booking" asp-action="Index">Bookings</a></li>
 

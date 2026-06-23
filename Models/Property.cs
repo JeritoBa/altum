@@ -31,6 +31,10 @@ namespace main.Models
         [Range(1, 1000, ErrorMessage = "Max Guests must be between 1 and 1000.")]
         public int MaxGuests { get; set; }
 
+        [Required(ErrorMessage = "Price per night is required.")]
+        [Range(0, 100000000, ErrorMessage = "Price per night must be between 0 and 100000000.")]
+        public decimal PricePerNight { get; set; } = 0.0m;
+
         [Required(ErrorMessage = "Bedrooms is required.")]
         [Range(0, 100, ErrorMessage = "Bedrooms cannot exceed 100.")]
         public int Bedrooms { get; set; }

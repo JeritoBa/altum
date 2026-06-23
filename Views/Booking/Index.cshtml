@@ -1,5 +1,67 @@
+@model IEnumerable<main.Models.Booking>
+@using Microsoft.AspNetCore.Identity
+@using main.Models.Enums
+@inject UserManager<main.Models.User> UserManager
 @{
     ViewData["Title"] = "Bookings";
+    var isOwner = User.IsInRole("Owner");
+    var user = await UserManager.GetUserAsync(User);
 }
 
-<h2>Booking Folder - Index</h2>
+<h2>Bookings</h2>
+
+<form method="get" asp-action="Index">
+    <div style="margin-bottom: 15px;">
+        <input type="text" name="location" placeholder="Search by location..." value="@ViewBag.Location" />
+        <input type="date" name="date" value="@ViewBag.Date" />
+        
+        @if (isOwner)
+        {
+            <input type="number" name="propertyId" placeholder="Property ID..." value="@ViewBag.PropertyId" />
+            <label>
+                <input type="checkbox" name="activesOnly" value="true" @(ViewBag.ActivesOnly == true ? "checked" : "") /> Actives Only
+            </label>
+        }
+        
+        <button type="submit">Filter</button>
+        <a asp-action="Index">Clear</a>
+    </div>
+</form>
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    @if (!Model.Any())
+    {
+        <p>No bookings found.</p>
+    }
+    
+    @foreach(var booking in Model)
+    {
+        <div style="border: 1px solid #ccc; border-radius: 8px; padding: 15px; width: 350px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);">
+            <h3 style="margin-top: 0; color: #333;">Property: @booking.Property.Name</h3>
+            <p style="margin: 5px 0;"><strong>Dates:</strong> @booking.CheckInDate.ToShortDateString() to @booking.CheckOutDate.ToShortDateString()</p>
+            <p style="margin: 5px 0;"><strong>Guests:</strong> @booking.GuestsCount</p>
+            <p style="margin: 5px 0;"><strong>Total Price:</strong> <span style="color: #28a745; font-weight: bold;">$@booking.TotalPrice</span></p>
+            <p style="margin: 5px 0;">
+                <strong>Status:</strong> 
+                <span style="font-weight: bold; color: @(booking.State == BookingState.Completed ? "green" : (booking.State == BookingState.Cancelled ? "red" : "orange"))">
+                    @booking.State.ToString().ToUpper()
+                </span>
+            </p>
+            <p style="margin: 5px 0;"><strong>Paid:</strong> @(booking.Paid ? "Yes" : "No")</p>
+            
+            <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee;">
+                @if (((isOwner && booking.Property.OwnerId == user?.Id) || (!isOwner && booking.GuestId == user?.Id)) && booking.State != BookingState.Cancelled && booking.State != BookingState.Completed)
+                {
+                    <form asp-action="CancelBooking" asp-route-id="@booking.Id" method="post" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Cancel this booking?');" style="background:none; border:none; color:red; text-decoration:underline; cursor:pointer; padding:0;">Cancel Booking</button>
+                    </form>
+                }
+                
+                @if (!isOwner && booking.State == BookingState.Pending && !booking.Paid)
+                {
+                    <span style="color: #666; font-size: 0.9em; margin-left: 10px;">(Payment integration soon)</span>
+                }
+            </div>
+        </div>
+    }
+</div>
