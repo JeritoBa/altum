@@ -1,6 +1,15 @@
 @model main.Models.Property
+@inject Microsoft.AspNetCore.Identity.UserManager<main.Models.User> UserManager
+@inject main.Services.Interfaces.IFavoriteService FavoriteService
 @{
     ViewData["Title"] = Model.Name;
+    var user = await UserManager.GetUserAsync(User);
+    bool isFav = false;
+    if (user != null)
+    {
+        var favResponse = await FavoriteService.GetFavoritesAsync(user.Id, propertyId: Model.Id);
+        isFav = favResponse.Success && favResponse.Data != null && favResponse.Data.Any();
+    }
 }
 
 <h2>@Model.Name</h2>
@@ -28,7 +37,19 @@
         </ul>
         
         <div style="margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px solid #ddd;">
-            <p><em>Favorite option will be placed here soon</em></p>
+            <div style="margin-bottom: 15px;">
+                @if (isFav)
+                {
+                    <span style="display:inline-block; background:#ff007f; border:1px solid #ff007f; color:white; padding: 8px 12px; border-radius: 4px; font-weight:bold;">❤ In Favorites</span>
+                }
+                else
+                {
+                    <form asp-controller="Favorite" asp-action="Add" asp-route-propertyId="@Model.Id" method="post" style="display:inline;">
+                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                        <button type="submit" style="background:white; border:1px solid #ff007f; color:#ff007f; padding: 8px 12px; border-radius: 4px; cursor:pointer; font-weight:bold;">❤ Add to Favorites</button>
+                    </form>
+                }
+            </div>
 
             @if (User.IsInRole("Guest") && Model.IsAvailable)
             {

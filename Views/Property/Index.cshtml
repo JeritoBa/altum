@@ -1,10 +1,21 @@
 @model IEnumerable<main.Models.Property>
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<main.Models.User> UserManager
+@inject main.Services.Interfaces.IFavoriteService FavoriteService
 @{
     ViewData["Title"] = "Properties";
     var isOwner = User.IsInRole("Owner");
     var user = await UserManager.GetUserAsync(User);
+    
+    HashSet<int> favoritePropertyIds = new HashSet<int>();
+    if (user != null)
+    {
+        var favResponse = await FavoriteService.GetFavoritesAsync(user.Id);
+        if (favResponse.Success && favResponse.Data != null)
+        {
+            favoritePropertyIds = favResponse.Data.Select(f => f.PropertyId).ToHashSet();
+        }
+    }
 }
 
 <h2>Properties</h2>
@@ -51,6 +62,17 @@
             <p style="margin: 5px 0;"><strong>Available:</strong> @(prop.IsAvailable ? "Yes" : "No")</p>
             
             <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee;">
+                @if (favoritePropertyIds.Contains(prop.Id))
+                {
+                    <span style="color:#ff007f; font-weight:bold; margin-right: 5px;">❤ In favorites</span>
+                }
+                else
+                {
+                    <form asp-controller="Favorite" asp-action="Add" asp-route-propertyId="@prop.Id" method="post" style="display:inline; margin-right: 5px;">
+                        <input type="hidden" name="returnUrl" value="@Context.Request.Path" />
+                        <button type="submit" style="background:none; border:none; color:#ff007f; text-decoration:none; cursor:pointer; padding:0; font-weight:bold;">❤ Add</button>
+                    </form>
+                }
                 <a asp-action="Details" asp-route-id="@prop.Id">View Details</a>
                 
                 @if (User.IsInRole("Guest") && prop.IsAvailable)
