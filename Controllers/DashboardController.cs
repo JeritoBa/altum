@@ -12,11 +12,13 @@ namespace main.Controllers
     public class DashboardController : Controller
     {
         private readonly IDashboardService _dashboardService;
+        private readonly IReportsService _reportsService;
         private readonly UserManager<User> _userManager;
 
-        public DashboardController(IDashboardService dashboardService, UserManager<User> userManager)
+        public DashboardController(IDashboardService dashboardService, IReportsService reportsService, UserManager<User> userManager)
         {
             _dashboardService = dashboardService;
+            _reportsService = reportsService;
             _userManager = userManager;
         }
 
@@ -36,6 +38,22 @@ namespace main.Controllers
             }
 
             return View(response.Data ?? new main.ViewModels.Dashboard.DashboardMetricsViewModel());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ExportReport(int? propertyId, DateTime? startDate, DateTime? endDate)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var response = await _reportsService.GenerateBookingsReportAsync(user.Id, propertyId, startDate, endDate);
+            
+            if (!response.Success || response.Data == null)
+            {
+                TempData["ErrorMessage"] = response.Message ?? "Failed to generate the Excel report.";
+                return RedirectToAction("Index");
+            }
+
+            string excelName = $"BookingsReport-{DateTime.Now.ToString("yyyyMMdd")}.xlsx";
+            return File(response.Data, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", excelName);
         }
     }
 }
