@@ -30,12 +30,56 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Auth/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aC9Mb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Auth/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aC9SZWdpc3Rlci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Booking/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9va2luZy9DcmVhdGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Booking/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQm9va2luZy9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGFzaGJvYXJkL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Favorite/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRmF2b3JpdGUvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/cohorte6/Documentos/Altum/applications/main/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/cohorte6/Documentos/Altum/applications/main/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Property/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvcGVydHkvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Property/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvcGVydHkvRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Property/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvcGVydHkvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Property/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvcGVydHkvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/cohorte6/Documentos/Altum/applications/main/Views/Property/_PropertyFormPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUHJvcGVydHkvX1Byb3BlcnR5Rm9ybVBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/cohorte6/Documentos/Altum/applications/main/Views/Shared/Error.cshtml]
