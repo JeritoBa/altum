@@ -1,48 +1,243 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" class="light">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Altum</title>
-</head>
-<body>
-    <header>
-        <nav>
-            <ul>
-                
-                <li><a asp-controller="Property" asp-action="Index">Properties</a></li>
-
-                @if (User.Identity != null && User.Identity.IsAuthenticated)
-                {
-                    @if (User.IsInRole("Owner")) {
-                        <li><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+    
+    <!-- Google Fonts: Inter for UI, Playfair Display for Headlines -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet"/>
+    <!-- Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f2f4f8",
+                        "surface-bright": "#f7f9fd",
+                        "on-surface": "#191c1f",
+                        "background": "#f7f9fd",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#bec6e0",
+                        "on-background": "#191c1f",
+                        "primary": "#000000",
+                        "on-secondary-fixed-variant": "#574500",
+                        "surface": "#f7f9fd",
+                        "inverse-on-surface": "#eff1f5",
+                        "on-error": "#ffffff",
+                        "tertiary-container": "#191c1e",
+                        "tertiary": "#000000",
+                        "secondary-container": "#fed65b",
+                        "surface-dim": "#d8dade",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-primary-fixed": "#131b2e",
+                        "outline": "#76777d",
+                        "surface-tint": "#565e74",
+                        "secondary-fixed": "#ffe088",
+                        "on-error-container": "#93000a",
+                        "outline-variant": "#c6c6cd",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#735c00",
+                        "inverse-surface": "#2d3134",
+                        "on-tertiary-container": "#818486",
+                        "secondary-fixed-dim": "#e9c349",
+                        "on-tertiary-fixed": "#191c1e",
+                        "surface-variant": "#e0e2e6",
+                        "inverse-primary": "#bec6e0",
+                        "primary-container": "#131b2e",
+                        "on-primary-container": "#7c839b",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed": "#e0e3e5",
+                        "on-surface-variant": "#45464d",
+                        "on-secondary-fixed": "#241a00",
+                        "surface-container-high": "#e6e8ec",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface-container": "#eceef2",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#dae2fd",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e0e2e6",
+                        "on-secondary-container": "#745c00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "64px",
+                        "margin-mobile": "16px",
+                        "base": "8px",
+                        "container-max": "1280px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Playfair Display"],
+                        "body-sm": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-xl-mobile": ["Playfair Display"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Playfair Display"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Playfair Display"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-md": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-xl-mobile": ["36px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-sm": ["10px", {"lineHeight": "1", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "fontWeight": "600"}]
                     }
-                    <li><a asp-controller="Favorite" asp-action="Index">Favorites</a></li>
-                    <li><a asp-controller="Booking" asp-action="Index">Bookings</a></li>
-
+                },
+            },
+        }
+    </script>
+    
+    <style>
+        .primary-gold-btn {
+            background-color: #D4AF37;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .primary-gold-btn:hover {
+            background-color: #B8962E;
+            transform: translateY(-1px);
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: 0 0 0 1px #000000;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background min-h-screen text-on-surface font-body-md">
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-50 bg-surface-container-lowest border-b border-outline-variant shadow-sm">
+        <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+            <nav class="flex items-center justify-between py-6">
+                <!-- Logo -->
+                <div class="flex items-center gap-2">
+                    <h1 class="font-headline-md text-headline-md text-primary font-bold">Altum</h1>
+                </div>
+                
+                <!-- Navigation Links -->
+                <ul class="flex items-center gap-8">
                     <li>
-                        <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline;">
-                            <button type="submit" style="background:none; border:none; color:blue; text-decoration:underline; cursor:pointer;">Logout (@User.Identity.Name)</button>
-                        </form>
+                        <a asp-controller="Property" asp-action="Index" 
+                           class="font-body-md text-on-surface hover:text-primary transition-colors">
+                            Propiedades
+                        </a>
                     </li>
-                }
-                else
-                {
-                    <li><a asp-controller="Auth" asp-action="Login">Login</a></li>
-                    <li><a asp-controller="Auth" asp-action="Register">Register</a></li>
-                }
-            </ul>
-        </nav>
+                    
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("Owner")) {
+                            <li>
+                                <a asp-controller="Dashboard" asp-action="Index" 
+                                   class="font-body-md text-on-surface hover:text-primary transition-colors">
+                                    Dashboard
+                                </a>
+                            </li>
+                        }
+                        
+                        <li>
+                            <a asp-controller="Favorite" asp-action="Index" 
+                               class="font-body-md text-on-surface hover:text-primary transition-colors">
+                                Favoritos
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a asp-controller="Booking" asp-action="Index" 
+                               class="font-body-md text-on-surface hover:text-primary transition-colors">
+                                Reservas
+                            </a>
+                        </li>
+                        
+                        <li class="border-l border-outline-variant pl-8">
+                            <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline;">
+                                <button type="submit" class="font-label-md text-label-md text-error hover:text-primary transition-colors uppercase tracking-wider">
+                                    Salir (@User.Identity.Name)
+                                </button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a asp-controller="Auth" asp-action="Login" 
+                               class="font-label-md text-label-md text-on-surface hover:text-primary transition-colors uppercase tracking-wider">
+                                Iniciar Sesión
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a asp-controller="Auth" asp-action="Register" 
+                               class="primary-gold-btn px-6 py-3 font-label-md text-label-md uppercase tracking-widest rounded-lg shadow-md">
+                                Registrarse
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
     </header>
     
-    <main role="main">
-        @RenderBody()
+    <!-- Main Content -->
+    <main role="main" class="min-h-[calc(100vh-200px)]">
+        <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-12">
+            @RenderBody()
+        </div>
     </main>
-
-    <footer style="margin-top: 50px;">
-        <p>&copy; 2026 - Altum App</p>
+    
+    <!-- Footer -->
+    <footer class="bg-primary-container text-inverse-on-surface py-12 mt-20">
+        <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-8">
+                <div>
+                    <h3 class="font-headline-md text-headline-md mb-4">Altum</h3>
+                    <p class="font-body-sm text-body-sm opacity-75">
+                        Gestión premium de propiedades de lujo.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-label-md text-label-md uppercase tracking-wider mb-4">Enlaces</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="font-body-sm text-body-sm opacity-75 hover:opacity-100 transition-opacity">Soporte</a></li>
+                        <li><a href="#" class="font-body-sm text-body-sm opacity-75 hover:opacity-100 transition-opacity">Privacidad</a></li>
+                        <li><a href="#" class="font-body-sm text-body-sm opacity-75 hover:opacity-100 transition-opacity">Seguridad</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-label-md text-label-md uppercase tracking-wider mb-4">Legal</h4>
+                    <p class="font-body-sm text-body-sm opacity-75">
+                        © 2026 Altum Property Management. Todos los derechos reservados.
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-outline-variant pt-8">
+                <p class="font-body-sm text-body-sm text-center opacity-60">
+                    Hecho con precisión arquitectónica.
+                </p>
+            </div>
+        </div>
     </footer>
-
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

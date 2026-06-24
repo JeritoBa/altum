@@ -1,64 +1,182 @@
 @model IEnumerable<main.Models.Favorite>
 @{
-    ViewData["Title"] = "Favorites";
+    ViewData["Title"] = "Mis Favoritos";
     var isGuest = User.IsInRole("Guest");
 }
 
-<h2>My Favorites</h2>
+<!-- Header Section -->
+<div class="mb-12">
+    <h1 class="font-headline-lg text-headline-lg text-primary mb-4">Propiedades Favoritas</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">Tu colección de propiedades de ensueño</p>
+</div>
 
-<form method="get" asp-action="Index">
-    <div style="margin-bottom: 15px;">
-        <input type="text" name="location" placeholder="Search by location..." value="@ViewBag.Location" />
-        <input type="date" name="availableDate" value="@ViewBag.AvailableDate" />
-        <input type="number" name="propertyId" placeholder="Property ID..." value="@ViewBag.PropertyId" />
-        
-        <button type="submit">Filter</button>
-        <a asp-action="Index">Clear</a>
-    </div>
-</form>
+<!-- Filter Form -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 mb-12">
+    <form method="get" asp-action="Index" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Location Filter -->
+            <div>
+                <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Ubicación</label>
+                <input type="text" 
+                       name="location" 
+                       placeholder="Ciudad, País..." 
+                       value="@ViewBag.Location"
+                       class="form-input w-full p-4 border border-outline-variant rounded-lg bg-background text-body-md" />
+            </div>
 
-<div style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <!-- Available Date Filter -->
+            <div>
+                <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Disponible desde</label>
+                <input type="date" 
+                       name="availableDate" 
+                       value="@ViewBag.AvailableDate"
+                       class="form-input w-full p-4 border border-outline-variant rounded-lg bg-background text-body-md" />
+            </div>
+
+            <!-- Property ID Filter -->
+            <div>
+                <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">ID Propiedad</label>
+                <input type="number" 
+                       name="propertyId" 
+                       placeholder="ID..." 
+                       value="@ViewBag.PropertyId"
+                       class="form-input w-full p-4 border border-outline-variant rounded-lg bg-background text-body-md" />
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-4">
+            <button type="submit" class="primary-gold-btn px-8 py-3 font-label-md text-label-md uppercase tracking-widest rounded-lg">
+                Filtrar
+            </button>
+            <a asp-action="Index" class="px-8 py-3 font-label-md text-label-md uppercase tracking-widest rounded-lg border border-outline-variant text-on-surface hover:bg-surface-container transition-colors">
+                Limpiar
+            </a>
+        </div>
+    </form>
+</div>
+
+<!-- Favorites Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     @if (!Model.Any())
     {
-        <p>No favorites found.</p>
+        <div class="col-span-full bg-surface-container-lowest rounded-xl border border-outline-variant p-12 text-center">
+            <span class="material-symbols-outlined text-[64px] text-on-surface-variant/30 block mb-4">favorite</span>
+            <p class="font-body-lg text-body-lg text-on-surface-variant">Aún no tienes favoritos</p>
+            <p class="font-body-sm text-body-sm text-on-surface-variant mt-2">Explora propiedades y añade tus favoritas</p>
+        </div>
     }
-    
+
     @foreach(var fav in Model)
     {
-        <div style="border: 1px solid #ccc; border-radius: 8px; padding: 15px; width: 300px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);">
-            @if (!string.IsNullOrEmpty(fav.Property.MainImageUrl))
-            {
-                <img src="@fav.Property.MainImageUrl" alt="@fav.Property.Name" style="width: 100%; height: 200px; object-fit: cover; border-radius: 4px;" />
-            }
-            <h3 style="margin-top: 10px; margin-bottom: 5px;">@fav.Property.Name</h3>
-            <p style="margin: 5px 0; color: #28a745; font-weight: bold;">$@fav.Property.PricePerNight / night</p>
-            <p style="margin: 5px 0;"><strong>Location:</strong> @fav.Property.City, @fav.Property.Country</p>
-            <p style="margin: 5px 0;"><strong>Bedrooms:</strong> @fav.Property.Bedrooms</p>
-            <p style="margin: 5px 0;"><strong>Available:</strong> @(fav.Property.IsAvailable ? "Yes" : "No")</p>
-            
-            <div style="margin-top: 15px; padding-top: 10px; border-top: 1px solid #eee; display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                    <a asp-controller="Property" asp-action="Details" asp-route-id="@fav.PropertyId">View Details</a>
-                    
-                    @if (isGuest && fav.Property.IsAvailable)
+        <div class="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant hover:shadow-lg transition-shadow">
+            <!-- Image -->
+            <div class="relative h-64 bg-surface-container overflow-hidden">
+                @if (!string.IsNullOrEmpty(fav.Property.MainImageUrl))
+                {
+                    <img src="@fav.Property.MainImageUrl" alt="@fav.Property.Name" class="w-full h-full object-cover" />
+                }
+                else
+                {
+                    <div class="w-full h-full bg-gradient-to-br from-primary-container to-primary-fixed-dim flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[64px] text-on-primary-fixed opacity-30">home</span>
+                    </div>
+                }
+
+                <!-- Favorite Heart (Always filled in favorites) -->
+                <div class="absolute top-4 right-4">
+                    <div class="w-10 h-10 bg-error text-on-error rounded-full flex items-center justify-center shadow-md">
+                        ❤
+                    </div>
+                </div>
+
+                <!-- Availability Badge -->
+                <div class="absolute top-4 left-4">
+                    @if (fav.Property.IsAvailable)
                     {
-                        <span style="margin: 0 5px;">|</span>
-                        <a asp-controller="Booking" asp-action="Create" asp-route-propertyId="@fav.PropertyId" style="color: green; font-weight: bold; text-decoration: none;">Book Now</a>
+                        <span class="bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md px-4 py-2 rounded-lg uppercase tracking-wider">Disponible</span>
+                    }
+                    else
+                    {
+                        <span class="bg-surface-variant text-on-surface font-label-md text-label-md px-4 py-2 rounded-lg uppercase tracking-wider">No Disponible</span>
                     }
                 </div>
-                
-                <dialog id="deleteModal_@fav.Id" style="border: none; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-                    <h3 style="margin-top:0;">Remove Favorite</h3>
-                    <p>Are you sure you want to remove this property from favorites?</p>
-                    <div style="margin-top: 20px; text-align: right;">
-                        <button type="button" onclick="document.getElementById('deleteModal_@fav.Id').close()" style="padding:8px 12px; border-radius:4px; cursor:pointer; background:#eee; border:1px solid #ccc; margin-right: 10px;">Cancel</button>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6 space-y-4">
+                <!-- Title -->
+                <h3 class="font-headline-md text-headline-md text-primary">@fav.Property.Name</h3>
+
+                <!-- Price -->
+                <div class="text-secondary-fixed font-label-md text-label-md">
+                    <span class="text-headline-lg font-bold">@fav.Property.PricePerNight</span> / noche
+                </div>
+
+                <!-- Location -->
+                <p class="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[18px]">location_on</span>
+                    @fav.Property.City, @fav.Property.Country
+                </p>
+
+                <!-- Property Details -->
+                <div class="grid grid-cols-2 gap-4 border-t border-outline-variant pt-4">
+                    <div>
+                        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Habitaciones</p>
+                        <p class="font-body-md text-on-surface">@fav.Property.Bedrooms</p>
+                    </div>
+                    <div>
+                        <p class="font-label-sm text-label-sm text-on-surface-variant uppercase mb-1">Huéspedes máx</p>
+                        <p class="font-body-md text-on-surface">@fav.Property.MaxGuests</p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-col gap-2 pt-4 border-t border-outline-variant">
+                    <a asp-controller="Property" asp-action="Details" asp-route-id="@fav.PropertyId" 
+                       class="bg-primary text-on-primary font-label-md text-label-md py-3 rounded-lg text-center uppercase tracking-wider hover:bg-primary-container transition-colors">
+                        Ver Detalles
+                    </a>
+
+                    @if (isGuest && fav.Property.IsAvailable)
+                    {
+                        <a asp-controller="Booking" asp-action="Create" asp-route-propertyId="@fav.PropertyId" 
+                           class="bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md py-3 rounded-lg text-center uppercase tracking-wider hover:bg-secondary-fixed-dim transition-colors">
+                            Reservar Ahora
+                        </a>
+                    }
+
+                    <!-- Remove from Favorites Button -->
+                    <button type="button" 
+                            onclick="document.getElementById('deleteModal_@fav.Id').showModal()" 
+                            class="bg-error/10 text-error font-label-md text-label-md py-3 rounded-lg text-center uppercase tracking-wider hover:bg-error hover:text-on-error transition-colors">
+                        Eliminar de Favoritos
+                    </button>
+                </div>
+            </div>
+
+            <!-- Delete Confirmation Dialog -->
+            <dialog id="deleteModal_@fav.Id" class="rounded-xl shadow-lg max-w-sm">
+                <div class="p-8">
+                    <h3 class="font-headline-md text-headline-md text-primary mb-4">Eliminar Favorito</h3>
+                    <p class="font-body-md text-body-md text-on-surface-variant mb-6">
+                        ¿Estás seguro de que deseas eliminar esta propiedad de tus favoritos?
+                    </p>
+
+                    <div class="flex gap-4 justify-end">
+                        <button type="button" 
+                                onclick="document.getElementById('deleteModal_@fav.Id').close()" 
+                                class="px-6 py-3 font-label-md text-label-md uppercase tracking-wider rounded-lg border border-outline-variant hover:bg-surface-container transition-colors">
+                            Cancelar
+                        </button>
                         <form asp-action="Delete" asp-route-id="@fav.Id" method="post" style="display:inline;">
-                            <button type="submit" style="background:red; color:white; border:none; padding:8px 12px; border-radius:4px; cursor:pointer;">Yes, Remove</button>
+                            <button type="submit" class="bg-error text-on-error px-6 py-3 font-label-md text-label-md uppercase tracking-wider rounded-lg hover:bg-error/90 transition-colors">
+                                Sí, Eliminar
+                            </button>
                         </form>
                     </div>
-                </dialog>
-                <button type="button" onclick="document.getElementById('deleteModal_@fav.Id').showModal()" style="background:none; border:none; color:red; text-decoration:underline; cursor:pointer; padding:0;">Remove</button>
-            </div>
+                </div>
+            </dialog>
         </div>
     }
 </div>

@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Text.Json;
 
 using main.Data;
 using main.Models;
@@ -16,10 +17,14 @@ namespace main.Services.Application
     public class BookingService : IBookingService
     {
         private readonly AppDbContext _context;
+        private readonly IPublisherService _publisherService;
+        private readonly UserManager<User> _userManager;
 
-        public BookingService(AppDbContext context)
+        public BookingService(AppDbContext context, IPublisherService publisherService, UserManager<User> userManager)
         {
             _context = context;
+            _publisherService = publisherService;
+            _userManager = userManager;
         }
 
         public async Task<ServiceResponse<IEnumerable<Booking>>> GetBookingsAsync(int? propertyId = null, bool? activesOnly = null, string location = null, DateTime? date = null, int? guestId = null, int? ownerId = null)
@@ -106,6 +111,19 @@ namespace main.Services.Application
 
                 response.Data = booking;
                 response.Message = "Booking created successfully.";
+
+                // Getting user authenticated
+                var user = await _userManager.FindByIdAsync(booking.GuestId.ToString());
+
+                // Creating validation of identity task
+                var validateIdentityTask = new {
+                    UserIdentification = user?.Identification ?? "",
+                    UserFullName = user?.FullName ?? "",
+                    UserBirthDay = user?.BirthDate.ToString("yyyy-MM-dd") ?? "",
+                    IdentificationImageUrl = ""
+                };
+
+                await _publisherService.PublishAsync("identity-validation", JsonSerializer.Serialize(validateIdentityTask));
             }
             catch (Exception ex)
             {

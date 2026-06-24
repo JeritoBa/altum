@@ -1,8 +1,94 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Hero Section -->
+<div class="relative min-h-screen flex items-center justify-center mb-20">
+    <!-- Background Image -->
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-primary-container/20 to-background"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="text-center max-w-2xl px-margin-mobile md:px-0">
+        <h1 class="font-headline-xl text-headline-xl text-primary mb-6 tracking-tight">
+            Gestión de Propiedades de Lujo
+        </h1>
+        <p class="font-headline-lg text-headline-lg text-on-surface-variant mb-8 font-normal">
+            La plataforma premium para propiedades de ensueño
+        </p>
+        <p class="font-body-lg text-body-lg text-on-surface-variant mb-12">
+            Altum es tu solución completa para gestionar, promocionar y monetizar propiedades de lujo con precisión arquitectónica.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col md:flex-row gap-6 justify-center">
+            <a asp-controller="Property" asp-action="Index" 
+               class="primary-gold-btn px-12 py-4 font-label-md text-label-md uppercase tracking-widest rounded-lg shadow-md inline-block">
+                Explorar Propiedades
+            </a>
+            <a asp-controller="Auth" asp-action="Register" 
+               class="px-12 py-4 font-label-md text-label-md uppercase tracking-widest rounded-lg border-2 border-primary text-primary hover:bg-primary hover:text-on-primary transition-colors inline-block">
+                Comenzar Ahora
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="py-20 border-t border-outline-variant">
+    <h2 class="font-headline-lg text-headline-lg text-primary mb-16 text-center">
+        Por qué elegir Altum
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <!-- Feature 1 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-secondary-fixed rounded-lg flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-primary">verified</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-primary mb-4">Verificación Premium</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+                Cada propiedad es verificada con los más altos estándares para garantizar autenticidad y calidad.
+            </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-secondary-fixed rounded-lg flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-primary">security</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-primary mb-4">Seguridad de Datos</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+                Protección de nivel empresarial para tus datos y transacciones inmobiliarias.
+            </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 hover:shadow-lg transition-shadow">
+            <div class="w-12 h-12 bg-secondary-fixed rounded-lg flex items-center justify-center mb-4">
+                <span class="material-symbols-outlined text-primary">analytics</span>
+            </div>
+            <h3 class="font-headline-md text-headline-md text-primary mb-4">Analytics Avanzado</h3>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+                Dashboard intuitivo con métricas detalladas para optimizar tu inversión inmobiliaria.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="py-20 bg-primary-container rounded-xl text-inverse-on-surface px-margin-mobile md:px-margin-desktop">
+    <div class="max-w-2xl">
+        <h2 class="font-headline-lg text-headline-lg mb-6">
+            Listo para comenzar tu viaje de lujo
+        </h2>
+        <p class="font-body-lg text-body-lg text-inverse-on-surface/80 mb-8">
+            Únete a cientos de propietarios que ya confían en Altum para gestionar sus propiedades de ensueño.
+        </p>
+        <a asp-controller="Auth" asp-action="Register" 
+           class="primary-gold-btn px-12 py-4 font-label-md text-label-md uppercase tracking-widest rounded-lg shadow-md inline-block">
+            Registrate Gratis
+        </a>
+    </div>
 </div>

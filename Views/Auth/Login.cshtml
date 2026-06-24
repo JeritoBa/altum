@@ -1,26 +1,72 @@
 @model main.ViewModels.Auth.LoginViewModel
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Iniciar Sesión";
 }
 
-<h2>Login</h2>
+<div class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md">
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 shadow-sm">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="font-headline-lg text-headline-lg text-primary mb-2">Bienvenido</h1>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Ingresa a tu cuenta Altum</p>
+            </div>
 
-<form asp-action="Login" method="post">
-    <div style="margin-bottom: 10px;">
-        <label asp-for="Email"></label><br />
-        <input asp-for="Email" />
-        <span asp-validation-for="Email" style="color:red;"></span>
-    </div>
-    
-    <div style="margin-bottom: 10px;">
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password" style="color:red;"></span>
-    </div>
-    
-    <button type="submit">Login</button>
-</form>
+            <!-- Login Form -->
+            <form asp-action="Login" method="post" class="space-y-6">
+                <!-- Email Field -->
+                <div>
+                    <label asp-for="Email" class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider"></label>
+                    <input asp-for="Email" 
+                           type="email"
+                           class="form-input w-full p-4 border border-outline-variant rounded-lg bg-surface-container-lowest text-body-md placeholder-on-surface-variant"
+                           placeholder="correo@ejemplo.com" />
+                    <span asp-validation-for="Email" class="block text-error text-body-sm mt-1 font-label-sm"></span>
+                </div>
 
-<p style="margin-top: 15px;">
-    Don't have an account? <a asp-action="Register">Register here</a>
-</p>
+                <!-- Password Field -->
+                <div>
+                    <label asp-for="Password" class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider"></label>
+                    <input asp-for="Password" 
+                           type="password"
+                           class="form-input w-full p-4 border border-outline-variant rounded-lg bg-surface-container-lowest text-body-md placeholder-on-surface-variant"
+                           placeholder="Contraseña" />
+                    <span asp-validation-for="Password" class="block text-error text-body-sm mt-1 font-label-sm"></span>
+                </div>
+
+                <!-- Remember Me -->
+                <div class="flex items-center">
+                    <input id="rememberMe" type="checkbox" class="w-4 h-4 text-primary border-outline-variant rounded focus:ring-primary" />
+                    <label for="rememberMe" class="ml-3 font-body-sm text-body-sm text-on-surface-variant">
+                        Recuerda mis datos
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="primary-gold-btn w-full py-4 font-label-md text-label-md uppercase tracking-widest rounded-lg shadow-md">
+                    Iniciar Sesión
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="relative my-8 flex items-center">
+                <div class="flex-grow border-t border-outline-variant"></div>
+                <span class="flex-shrink mx-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">O</span>
+                <div class="flex-grow border-t border-outline-variant"></div>
+            </div>
+
+            <!-- Register Link -->
+            <p class="text-center">
+                <span class="font-body-sm text-body-sm text-on-surface-variant">¿No tienes cuenta?</span>
+                <a asp-action="Register" class="font-label-md text-primary hover:text-secondary-fixed transition-colors ml-1">Regístrate aquí</a>
+            </p>
+
+            <!-- Legal Footer -->
+            <div class="mt-8 text-center">
+                <p class="font-body-sm text-body-sm text-on-surface-variant opacity-60">
+                    © 2026 Altum Premium Property Management
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

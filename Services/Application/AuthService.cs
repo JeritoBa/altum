@@ -29,6 +29,8 @@ namespace main.Services.Application
                 UserName = model.Email,
                 Email = model.Email,
                 FullName = model.FullName,
+                Identification = model.Identification,
+                BirthDate = model.BirthDate,
                 Role = model.Role,
                 IsActive = true
             };

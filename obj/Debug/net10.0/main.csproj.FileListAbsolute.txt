@@ -113,7 +113,6 @@
 /home/cohorte6/Documentos/Altum/applications/main/obj/Debug/net10.0/scopedcss/Views/Shared/_Layout.cshtml.rz.scp.css
 /home/cohorte6/Documentos/Altum/applications/main/obj/Debug/net10.0/scopedcss/bundle/main.styles.css
 /home/cohorte6/Documentos/Altum/applications/main/obj/Debug/net10.0/scopedcss/projectbundle/main.bundle.scp.css
-/home/cohorte6/Documentos/Altum/applications/main/obj/Debug/net10.0/compressed/s57kixvyrp-{0}-lugek5hnai-lugek5hnai.gz
 /home/cohorte6/Documentos/Altum/applications/main/obj/Debug/net10.0/compressed/jrnv664dkx-{0}-61n19gt1b8-61n19gt1b8.gz
 /home/cohorte6/Documentos/Altum/applications/main/obj/Debug/net10.0/compressed/4py5f8mcuo-{0}-fr7q2aak1r-fr7q2aak1r.gz
 /home/cohorte6/Documentos/Altum/applications/main/obj/Debug/net10.0/compressed/snaxzdcoxl-{0}-bqjiyaj88i-bqjiyaj88i.gz
@@ -191,3 +190,5 @@
 /home/cohorte6/Documentos/Altum/applications/main/bin/Debug/net10.0/EPPlus.dll
 /home/cohorte6/Documentos/Altum/applications/main/bin/Debug/net10.0/EPPlus.Interfaces.dll
 /home/cohorte6/Documentos/Altum/applications/main/bin/Debug/net10.0/Microsoft.IO.RecyclableMemoryStream.dll
+/home/cohorte6/Documentos/Altum/applications/main/bin/Debug/net10.0/RabbitMQ.Client.dll
+/home/cohorte6/Documentos/Altum/applications/main/obj/Debug/net10.0/compressed/s57kixvyrp-{0}-a4wh5iecme-a4wh5iecme.gz

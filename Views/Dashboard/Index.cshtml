@@ -1,104 +1,206 @@
 @model main.ViewModels.Dashboard.DashboardMetricsViewModel
 @{
-    ViewData["Title"] = "Owner Dashboard";
+    ViewData["Title"] = "Dashboard de Propietario";
 }
 
-<h2>Owner Dashboard</h2>
+<!-- Header Section -->
+<div class="mb-12">
+    <h1 class="font-headline-lg text-headline-lg text-primary mb-4">Dashboard Analítico</h1>
+    <p class="font-body-lg text-body-lg text-on-surface-variant">Análisis completo de tu portafolio inmobiliario</p>
+</div>
 
+<!-- Error Message -->
 @if (TempData["ErrorMessage"] != null)
 {
-    <div style="background-color: #f8d7da; color: #721c24; padding: 15px; margin-bottom: 20px; border: 1px solid #f5c6cb; border-radius: 4px;">
-        @TempData["ErrorMessage"]
+    <div class="bg-error/10 border border-error text-error p-6 rounded-xl mb-8">
+        <p class="font-body-md">@TempData["ErrorMessage"]</p>
     </div>
 }
 
-<div style="background: #e9ecef; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-    <h3 style="margin-top: 0;">Export Excel Report</h3>
-    <form method="get" asp-action="ExportReport">
-        <label>Property:</label>
-        <select name="propertyId" style="padding: 5px;">
-            <option value="">All Properties</option>
-            @if (Model != null && Model.PropertyMetrics != null && Model.PropertyMetrics.Any())
-            {
-                foreach (var p in Model.PropertyMetrics)
-                {
-                    <option value="@p.PropertyId">@p.PropertyName</option>
-                }
-            }
-        </select>
+<!-- Export Report Section -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 mb-8">
+    <h2 class="font-headline-md text-headline-md text-primary mb-6">Exportar Reporte</h2>
+    
+    <form method="get" asp-action="ExportReport" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Property Select -->
+            <div>
+                <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Propiedad</label>
+                <select name="propertyId" class="form-input w-full p-4 border border-outline-variant rounded-lg bg-background text-body-md">
+                    <option value="">Todas las Propiedades</option>
+                    @if (Model != null && Model.PropertyMetrics != null && Model.PropertyMetrics.Any())
+                    {
+                        @foreach (var p in Model.PropertyMetrics)
+                        {
+                            <option value="@p.PropertyId">@p.PropertyName</option>
+                        }
+                    }
+                </select>
+            </div>
 
-        <label style="margin-left: 10px;">Start Date:</label>
-        <input type="date" name="startDate" />
-        
-        <label style="margin-left: 10px;">End Date:</label>
-        <input type="date" name="endDate" />
-        
-        <button type="submit" style="margin-left: 10px; background-color: #28a745; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: bold;">Download Excel</button>
+            <!-- Start Date -->
+            <div>
+                <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Fecha Inicio</label>
+                <input type="date" name="startDate" class="form-input w-full p-4 border border-outline-variant rounded-lg bg-background text-body-md" />
+            </div>
+
+            <!-- End Date -->
+            <div>
+                <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Fecha Fin</label>
+                <input type="date" name="endDate" class="form-input w-full p-4 border border-outline-variant rounded-lg bg-background text-body-md" />
+            </div>
+
+            <!-- Export Button -->
+            <div class="flex items-end">
+                <button type="submit" class="primary-gold-btn w-full py-4 font-label-md text-label-md uppercase tracking-widest rounded-lg">
+                    <span class="material-symbols-outlined inline mr-2">download</span>
+                    Descargar Excel
+                </button>
+            </div>
+        </div>
     </form>
 </div>
 
-<div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-    <h3>Main Metrics</h3>
+<!-- Metrics Filter Section -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 mb-8">
+    <h2 class="font-headline-md text-headline-md text-primary mb-6">Filtrar Métricas</h2>
+    
+    <form method="get" asp-action="Index" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Start Date -->
+            <div>
+                <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Fecha Inicio</label>
+                <input type="date" 
+                       name="startDate" 
+                       value="@(Model?.StartDate != DateTime.MinValue ? Model?.StartDate.ToString("yyyy-MM-dd") : "")"
+                       class="form-input w-full p-4 border border-outline-variant rounded-lg bg-background text-body-md" />
+            </div>
 
-    <form method="get" asp-action="Index">
-        <label>Start Date:</label>
-        <input type="date" name="startDate" value="@(Model?.StartDate != DateTime.MinValue ? Model?.StartDate.ToString("yyyy-MM-dd") : "")" />
-        
-        <label style="margin-left: 10px;">End Date:</label>
-        <input type="date" name="endDate" value="@(Model?.EndDate != DateTime.MinValue ? Model?.EndDate.ToString("yyyy-MM-dd") : "")" />
-        
-        <button type="submit" style="margin-left: 10px;">Filter</button>
-        <a asp-action="Index" style="margin-left: 10px;">Current Month</a>
+            <!-- End Date -->
+            <div>
+                <label class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Fecha Fin</label>
+                <input type="date" 
+                       name="endDate" 
+                       value="@(Model?.EndDate != DateTime.MinValue ? Model?.EndDate.ToString("yyyy-MM-dd") : "")"
+                       class="form-input w-full p-4 border border-outline-variant rounded-lg bg-background text-body-md" />
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-end gap-4">
+                <button type="submit" class="flex-1 bg-primary text-on-primary py-4 font-label-md text-label-md uppercase tracking-widest rounded-lg hover:bg-primary-container transition-colors">
+                    Filtrar
+                </button>
+                <a asp-action="Index" class="flex-1 bg-surface-container text-on-surface py-4 font-label-md text-label-md uppercase tracking-widest rounded-lg text-center hover:bg-surface-container-high transition-colors">
+                    Este Mes
+                </a>
+            </div>
+        </div>
     </form>
 </div>
 
+<!-- Metrics Display -->
 @if (Model == null || Model.StartDate == DateTime.MinValue)
 {
-    <p>No data available.</p>
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-12 text-center">
+        <span class="material-symbols-outlined text-[64px] text-on-surface-variant/30 block mb-4">analytics</span>
+        <p class="font-body-lg text-body-lg text-on-surface-variant">Selecciona un rango de fechas para ver las métricas</p>
+    </div>
 }
 else
 {
-    <div style="display: flex; gap: 20px; margin-bottom: 30px;">
-        <div style="flex: 1; background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 2px 2px 5px rgba(0,0,0,0.05);">
-            <h3>Total Income</h3>
-            <p style="font-size: 24px; color: #28a745; font-weight: bold;">$@Model.TotalIncome.ToString("N2")</p>
+    <!-- KPI Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <!-- Total Income -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 hover:shadow-lg transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Ingresos Totales</p>
+                    <p class="text-secondary-fixed font-headline-lg text-headline-lg">
+                        $@Model.TotalIncome.ToString("N2")
+                    </p>
+                </div>
+                <div class="w-12 h-12 bg-secondary-fixed/20 rounded-lg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-secondary-fixed">trending_up</span>
+                </div>
+            </div>
         </div>
-        <div style="flex: 1; background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 2px 2px 5px rgba(0,0,0,0.05);">
-            <h3>Occupancy Rate</h3>
-            <p style="font-size: 24px; color: #007bff; font-weight: bold;">@Model.OccupancyRate.ToString("N2")%</p>
+
+        <!-- Occupancy Rate -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 hover:shadow-lg transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Tasa Ocupación</p>
+                    <p class="text-primary font-headline-lg text-headline-lg">
+                        @Model.OccupancyRate.ToString("N2")%
+                    </p>
+                </div>
+                <div class="w-12 h-12 bg-primary-fixed/20 rounded-lg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary">assessment</span>
+                </div>
+            </div>
         </div>
-        <div style="flex: 1; background: #fff; border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 2px 2px 5px rgba(0,0,0,0.05);">
-            <h3>Total Bookings</h3>
-            <p style="font-size: 24px; font-weight: bold;">@Model.TotalBookings</p>
+
+        <!-- Total Bookings -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 hover:shadow-lg transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+                <div>
+                    <p class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">Total Reservas</p>
+                    <p class="text-primary-container font-headline-lg text-headline-lg">
+                        @Model.TotalBookings
+                    </p>
+                </div>
+                <div class="w-12 h-12 bg-primary-container/20 rounded-lg flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary-container">calendar_month</span>
+                </div>
+            </div>
         </div>
     </div>
 
-    <h3>Metrics per Property</h3>
-    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
-        <thead>
-            <tr style="background: #f1f1f1;">
-                <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Property Name</th>
-                <th style="padding: 10px; border: 1px solid #ddd; text-align: right;">Income</th>
-                <th style="padding: 10px; border: 1px solid #ddd; text-align: right;">Occupancy Rate</th>
-                <th style="padding: 10px; border: 1px solid #ddd; text-align: center;">Bookings</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (!Model.PropertyMetrics.Any())
-            {
-                <tr>
-                    <td colspan="4" style="padding: 10px; border: 1px solid #ddd; text-align: center;">No properties found.</td>
-                </tr>
-            }
-            @foreach (var pm in Model.PropertyMetrics)
-            {
-                <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd;">@pm.PropertyName</td>
-                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; color: #28a745; font-weight: bold;">$@pm.Income.ToString("N2")</td>
-                    <td style="padding: 10px; border: 1px solid #ddd; text-align: right; color: #007bff;">@pm.OccupancyRate.ToString("N2")%</td>
-                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">@pm.BookingsCount</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <!-- Properties Metrics Table -->
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden">
+        <div class="p-8 border-b border-outline-variant">
+            <h2 class="font-headline-md text-headline-md text-primary">Métricas por Propiedad</h2>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead class="bg-surface-container">
+                    <tr>
+                        <th class="px-8 py-4 text-left font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Nombre de Propiedad</th>
+                        <th class="px-8 py-4 text-right font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Ingresos</th>
+                        <th class="px-8 py-4 text-right font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Ocupación</th>
+                        <th class="px-8 py-4 text-center font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Reservas</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-outline-variant">
+                    @if (!Model.PropertyMetrics.Any())
+                    {
+                        <tr>
+                            <td colspan="4" class="px-8 py-8 text-center text-on-surface-variant font-body-md">
+                                No se encontraron propiedades
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var pm in Model.PropertyMetrics)
+                        {
+                            <tr class="hover:bg-surface-container transition-colors">
+                                <td class="px-8 py-4 font-body-md text-on-surface">@pm.PropertyName</td>
+                                <td class="px-8 py-4 text-right font-label-md text-secondary-fixed font-bold">
+                                    $@pm.Income.ToString("N2")
+                                </td>
+                                <td class="px-8 py-4 text-right font-label-md text-on-surface">
+                                    @pm.OccupancyRate.ToString("N2")%
+                                </td>
+                                <td class="px-8 py-4 text-center font-label-md text-on-surface">
+                                    @pm.BookingsCount
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 }

@@ -1,6 +1,73 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Política de Privacidad";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="max-w-3xl mx-auto">
+    <!-- Header -->
+    <div class="mb-12">
+        <h1 class="font-headline-lg text-headline-lg text-primary mb-4">@ViewData["Title"]</h1>
+        <p class="font-body-lg text-body-lg text-on-surface-variant">Última actualización: Junio 2026</p>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="space-y-8">
+        <!-- Section 1 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8">
+            <h2 class="font-headline-md text-headline-md text-primary mb-4">Introducción</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                En Altum, valoramos tu privacidad y nos comprometemos a proteger tus datos personales. 
+                Esta política de privacidad explica cómo recopilamos, utilizamos y protegemos tu información.
+            </p>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8">
+            <h2 class="font-headline-md text-headline-md text-primary mb-4">Información que Recopilamos</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                Recopilamos información que proporcionas voluntariamente, como tu nombre, correo electrónico, 
+                y datos de propiedades. También recopilamos información de uso automatizada a través de cookies 
+                y tecnologías similares.
+            </p>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8">
+            <h2 class="font-headline-md text-headline-md text-primary mb-4">Cómo Utilizamos tu Información</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                Utilizamos tu información para:
+            </p>
+            <ul class="list-disc list-inside space-y-2 font-body-md text-on-surface-variant">
+                <li>Proporcionar y mejorar nuestros servicios</li>
+                <li>Procesar transacciones</li>
+                <li>Enviarte comunicaciones relevantes</li>
+                <li>Cumplir con obligaciones legales</li>
+            </ul>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8">
+            <h2 class="font-headline-md text-headline-md text-primary mb-4">Protección de Datos</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+                Implementamos medidas de seguridad estándar para proteger tus datos contra acceso no autorizado 
+                y modificación. Sin embargo, ningún sistema es 100% seguro.
+            </p>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8">
+            <h2 class="font-headline-md text-headline-md text-primary mb-4">Contacto</h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+                Si tienes preguntas sobre esta política de privacidad, por favor contacta a nuestro equipo de soporte 
+                en <a href="mailto:privacy@altum.com" class="text-primary underline hover:text-secondary-fixed">privacy@altum.com</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="mt-12">
+        <a href="/" class="inline-flex items-center gap-2 text-primary hover:text-secondary-fixed transition-colors">
+            <span class="material-symbols-outlined">arrow_back</span>
+            <span class="font-label-md text-label-md uppercase tracking-wider">Volver al Inicio</span>
+        </a>
+    </div>
+</div>

@@ -1,46 +1,115 @@
 @model main.ViewModels.Auth.RegisterViewModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registro";
 }
 
-<h2>Register</h2>
+<div class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-md">
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 shadow-sm">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="font-headline-lg text-headline-lg text-primary mb-2">Crear Cuenta</h1>
+                <p class="font-body-sm text-body-sm text-on-surface-variant">Únete a la comunidad Altum</p>
+            </div>
 
-<form asp-action="Register" method="post">
-    <div style="margin-bottom: 10px;">
-        <label asp-for="FullName">Full Name</label><br />
-        <input asp-for="FullName" />
-        <span asp-validation-for="FullName" style="color:red;"></span>
-    </div>
+            <!-- Registration Form -->
+            <form asp-action="Register" method="post" class="space-y-6">
+                <!-- Full Name Field -->
+                <div>
+                    <label asp-for="FullName" class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Nombre Completo</label>
+                    <input asp-for="FullName" 
+                           type="text"
+                           class="form-input w-full p-4 border border-outline-variant rounded-lg bg-surface-container-lowest text-body-md placeholder-on-surface-variant"
+                           placeholder="Juan García López" />
+                    <span asp-validation-for="FullName" class="block text-error text-body-sm mt-1 font-label-sm"></span>
+                </div>
 
-    <div style="margin-bottom: 10px;">
-        <label asp-for="Email"></label><br />
-        <input asp-for="Email" />
-        <span asp-validation-for="Email" style="color:red;"></span>
-    </div>
-    
-    <div style="margin-bottom: 10px;">
-        <label asp-for="Password"></label><br />
-        <input asp-for="Password" />
-        <span asp-validation-for="Password" style="color:red;"></span>
-    </div>
+                <!-- Identification Field -->
+                <div>
+                    <label asp-for="Identification" class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Identificación (Cédula / Pasaporte)</label>
+                    <input asp-for="Identification" 
+                           type="text"
+                           class="form-input w-full p-4 border border-outline-variant rounded-lg bg-surface-container-lowest text-body-md placeholder-on-surface-variant"
+                           placeholder="123456789" />
+                    <span asp-validation-for="Identification" class="block text-error text-body-sm mt-1 font-label-sm"></span>
+                </div>
 
-    <div style="margin-bottom: 10px;">
-        <label asp-for="ConfirmPassword">Confirm Password</label><br />
-        <input asp-for="ConfirmPassword" />
-        <span asp-validation-for="ConfirmPassword" style="color:red;"></span>
-    </div>
+                <!-- Birth Date Field -->
+                <div>
+                    <label asp-for="BirthDate" class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Fecha de Nacimiento</label>
+                    <input asp-for="BirthDate" 
+                           type="date"
+                           class="form-input w-full p-4 border border-outline-variant rounded-lg bg-surface-container-lowest text-body-md placeholder-on-surface-variant" />
+                    <span asp-validation-for="BirthDate" class="block text-error text-body-sm mt-1 font-label-sm"></span>
+                </div>
 
-    <div style="margin-bottom: 10px;">
-        <label asp-for="Role"></label><br />
-        <select asp-for="Role" asp-items="Html.GetEnumSelectList<main.Models.Enums.UserRole>()">
-            <option value="">-- Select a Role --</option>
-        </select>
-        <span asp-validation-for="Role" style="color:red;"></span>
-    </div>
-    
-    <button type="submit">Register</button>
-</form>
+                <!-- Email Field -->
+                <div>
+                    <label asp-for="Email" class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Correo Electrónico</label>
+                    <input asp-for="Email" 
+                           type="email"
+                           class="form-input w-full p-4 border border-outline-variant rounded-lg bg-surface-container-lowest text-body-md placeholder-on-surface-variant"
+                           placeholder="correo@ejemplo.com" />
+                    <span asp-validation-for="Email" class="block text-error text-body-sm mt-1 font-label-sm"></span>
+                </div>
 
-<p style="margin-top: 15px;">
-    Already have an account? <a asp-action="Login">Login here</a>
-</p>
+                <!-- Password Field -->
+                <div>
+                    <label asp-for="Password" class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Contraseña</label>
+                    <input asp-for="Password" 
+                           type="password"
+                           class="form-input w-full p-4 border border-outline-variant rounded-lg bg-surface-container-lowest text-body-md placeholder-on-surface-variant"
+                           placeholder="Mínimo 8 caracteres" />
+                    <span asp-validation-for="Password" class="block text-error text-body-sm mt-1 font-label-sm"></span>
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div>
+                    <label asp-for="ConfirmPassword" class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Confirmar Contraseña</label>
+                    <input asp-for="ConfirmPassword" 
+                           type="password"
+                           class="form-input w-full p-4 border border-outline-variant rounded-lg bg-surface-container-lowest text-body-md placeholder-on-surface-variant"
+                           placeholder="Repite tu contraseña" />
+                    <span asp-validation-for="ConfirmPassword" class="block text-error text-body-sm mt-1 font-label-sm"></span>
+                </div>
+
+                <!-- Role Field -->
+                <div>
+                    <label asp-for="Role" class="block font-label-sm text-label-sm text-on-surface-variant mb-2 uppercase tracking-wider">Tipo de Cuenta</label>
+                    <select asp-for="Role" 
+                            asp-items="Html.GetEnumSelectList<main.Models.Enums.UserRole>()"
+                            class="form-input w-full p-4 border border-outline-variant rounded-lg bg-surface-container-lowest text-body-md">
+                        <option value="">-- Selecciona un rol --</option>
+                    </select>
+                    <span asp-validation-for="Role" class="block text-error text-body-sm mt-1 font-label-sm"></span>
+                </div>
+
+                <!-- Terms Acceptance -->
+                <div class="flex items-start">
+                    <input id="terms" type="checkbox" required="" class="mt-1 w-4 h-4 text-primary border-outline-variant rounded focus:ring-primary" />
+                    <label for="terms" class="ml-3 font-body-sm text-body-sm text-on-surface-variant">
+                        Acepto los <a href="#" class="text-primary underline hover:text-secondary-fixed">Términos de Servicio</a> y la <a href="#" class="text-primary underline hover:text-secondary-fixed">Política de Privacidad</a>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="primary-gold-btn w-full py-4 font-label-md text-label-md uppercase tracking-widest rounded-lg shadow-md">
+                    Crear Cuenta
+                </button>
+            </form>
+
+            <!-- Divider -->
+            <div class="relative my-8 flex items-center">
+                <div class="flex-grow border-t border-outline-variant"></div>
+                <span class="flex-shrink mx-4 font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">O</span>
+                <div class="flex-grow border-t border-outline-variant"></div>
+            </div>
+
+            <!-- Login Link -->
+            <p class="text-center">
+                <span class="font-body-sm text-body-sm text-on-surface-variant">¿Ya tienes cuenta?</span>
+                <a asp-action="Login" class="font-label-md text-primary hover:text-secondary-fixed transition-colors ml-1">Inicia sesión</a>
+            </p>
+        </div>
+    </div>
+</div>

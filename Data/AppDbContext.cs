@@ -29,6 +29,9 @@ namespace main.Data
             builder.Entity<Booking>()
                 .Property(b => b.CheckOutDate)
                 .HasColumnType("timestamp without time zone");
+            builder.Entity<User>()
+                .Property(u => u.BirthDate)
+                .HasColumnType("timestamp without time zone");
 
             // Enums conversion to string
             builder.Entity<User>()
