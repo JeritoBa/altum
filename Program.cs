@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using main.Data;
 using main.Models;
 using main.Data.Seeders;
+using main.Services.Interfaces;
+using main.Services.Application;
+using main.Services.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +22,13 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options => {
 })
 .AddEntityFrameworkStores<AppDbContext>()
 .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPropertyService, PropertyService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
+builder.Services.AddScoped<IFavoriteService, FavoriteService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IReportsService, ReportsService>();
 
 var app = builder.Build();
 

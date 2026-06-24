@@ -1,0 +1,14 @@
+@model main.ViewModels.Property.PropertyFormViewModel
+@{
+    ViewData["Title"] = "Edit Property";
+}
+
+<h2>Edit Property</h2>
+
+<form asp-action="Edit" method="post">
+    <div asp-validation-summary="ModelOnly" style="color:red;"></div>
+    <input type="hidden" asp-for="Id" />
+    @await Html.PartialAsync("_PropertyFormPartial")
+    <button type="submit">Save Changes</button>
+    <a asp-action="Index">Cancel</a>
+</form>

@@ -1,0 +1,72 @@
+@model main.Models.Property
+@inject Microsoft.AspNetCore.Identity.UserManager<main.Models.User> UserManager
+@inject main.Services.Interfaces.IFavoriteService FavoriteService
+@{
+    ViewData["Title"] = Model.Name;
+    var user = await UserManager.GetUserAsync(User);
+    bool isFav = false;
+    if (user != null)
+    {
+        var favResponse = await FavoriteService.GetFavoritesAsync(user.Id, propertyId: Model.Id);
+        isFav = favResponse.Success && favResponse.Data != null && favResponse.Data.Any();
+    }
+}
+
+<h2>@Model.Name</h2>
+
+<div style="display: flex; gap: 20px; flex-wrap: wrap;">
+    @if (!string.IsNullOrEmpty(Model.MainImageUrl))
+    {
+        <div style="flex: 1; min-width: 300px;">
+            <img src="@Model.MainImageUrl" alt="@Model.Name" style="max-width: 100%; border-radius: 8px; box-shadow: 2px 2px 8px rgba(0,0,0,0.2);" />
+        </div>
+    }
+    
+    <div style="flex: 1; min-width: 300px;">
+        <h3>Description</h3>
+        <p style="white-space: pre-wrap;">@Model.Description</p>
+        
+        <h3>Property Details</h3>
+        <ul>
+            <li><strong>Price per Night:</strong> <span style="color: #28a745; font-weight: bold;">$@Model.PricePerNight</span></li>
+            <li><strong>Address:</strong> @Model.Address, @Model.City, @Model.Country</li>
+            <li><strong>Max Guests:</strong> @Model.MaxGuests</li>
+            <li><strong>Bedrooms:</strong> @Model.Bedrooms</li>
+            <li><strong>Bathrooms:</strong> @Model.Bathrooms</li>
+            <li><strong>Status:</strong> @(Model.IsAvailable ? "Available to book" : "Not available")</li>
+        </ul>
+        
+        <div style="margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 8px; border: 1px solid #ddd;">
+            <div style="margin-bottom: 15px;">
+                @if (isFav)
+                {
+                    <span style="display:inline-block; background:#ff007f; border:1px solid #ff007f; color:white; padding: 8px 12px; border-radius: 4px; font-weight:bold;">❤ In Favorites</span>
+                }
+                else
+                {
+                    <form asp-controller="Favorite" asp-action="Add" asp-route-propertyId="@Model.Id" method="post" style="display:inline;">
+                        <input type="hidden" name="returnUrl" value="@Context.Request.Path@Context.Request.QueryString" />
+                        <button type="submit" style="background:white; border:1px solid #ff007f; color:#ff007f; padding: 8px 12px; border-radius: 4px; cursor:pointer; font-weight:bold;">❤ Add to Favorites</button>
+                    </form>
+                }
+            </div>
+
+            @if (User.IsInRole("Guest") && Model.IsAvailable)
+            {
+                <a asp-controller="Booking" asp-action="Create" asp-route-propertyId="@Model.Id" style="display:inline-block; background-color: #007bff; color: white; padding: 10px 15px; text-decoration: none; border-radius: 4px;">Book Now</a>
+            }
+            else if (!Model.IsAvailable)
+            {
+                <p style="color: red; margin: 0;">This property is not available for booking right now.</p>
+            }
+            else if (User.IsInRole("Owner"))
+            {
+                <p style="color: #666; margin: 0;">Owners cannot book properties.</p>
+            }
+        </div>
+    </div>
+</div>
+
+<div style="margin-top: 20px;">
+    <a asp-action="Index" style="text-decoration: none; color: blue;">← Back to Properties list</a>
+</div>
